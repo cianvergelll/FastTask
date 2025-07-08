@@ -1,0 +1,61 @@
+<div class="task-list-container">
+    <div class="header">
+        <h2>My Tasks</h2>
+        <button class="btn btn-danger" (click)="logout()">Logout</button>
+    </div>
+
+    <div class="controls">
+        <div class="filter-control">
+            <label for="statusFilter">Filter by status:</label>
+            <select id="statusFilter" class="form-control" [(ngModel)]="statusFilter" (change)="onStatusChange()">
+                <option value="all">All</option>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+            </select>
+        </div>
+
+        <div class="search-control">
+            <label for="search">Search:</label>
+            <input type="text" id="search" class="form-control" [(ngModel)]="searchTerm" (input)="onSearch()"
+                placeholder="Search tasks...">
+        </div>
+
+        <a routerLink="/tasks/new" class="btn btn-primary">Add New Task</a>
+    </div>
+
+    <div class="task-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let task of filteredTasks">
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.description || 'N/A' }}</td>
+                    <td>
+                        <span class="status-badge" [ngClass]="{
+              'badge-pending': task.status === 'pending',
+              'badge-in-progress': task.status === 'in_progress',
+              'badge-completed': task.status === 'completed'
+            }">
+                            {{ task.status | titlecase }}
+                        </span>
+                    </td>
+                    <td>
+                        <a [routerLink]="['/tasks/edit', task.id]" class="btn btn-sm btn-info">Edit</a>
+                        <button (click)="deleteTask(task.id!)" class="btn btn-sm btn-danger">Delete</button>
+                    </td>
+                </tr>
+                <tr *ngIf="filteredTasks.length === 0">
+                    <td colspan="4" class="text-center">No tasks found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
