@@ -20,6 +20,7 @@ class AuthController {
 
             const user = await UserModel.create({ username, email, password });
             const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
+            console.log('Token generated:', token);
 
             res.status(201).json({ token, user: { id: user.id, username: user.username, email: user.email } });
         } catch (error) {

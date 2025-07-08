@@ -34,7 +34,15 @@ class UserModel {
     }
 
     static async verifyPassword(user: User, password: string): Promise<boolean> {
-        return bcrypt.compare(password, user.password);
+        try {
+            console.log('Comparing passwords...');
+            console.log('Input password:', password);
+            console.log('Stored hash:', user.password);
+            return await bcrypt.compare(password, user.password);
+        } catch (error) {
+            console.error('Password verification error:', error);
+            return false;
+        }
     }
 }
 
