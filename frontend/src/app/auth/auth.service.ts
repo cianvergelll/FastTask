@@ -22,6 +22,8 @@ export class AuthService {
         return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
             tap((response: any) => {
                 console.log('Login response:', response);
+                console.log('User logged in:', response.user);
+                console.log('Token set:', response.token);
                 this.setToken(response.token);
                 this.setUser(response.user);
             }),
