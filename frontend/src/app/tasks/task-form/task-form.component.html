@@ -1,7 +1,7 @@
 <div class="task-form-container">
     <h2>{{ isEditMode ? 'Edit Task' : 'Create New Task' }}</h2>
 
-    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" id="title" formControlName="title" class="form-control">
@@ -12,7 +12,7 @@
 
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea id="description" formControlName="description" class="form-control" rows="3"></textarea>
+            <textarea id="description" formControlName="description" class="form-control" rows="4"></textarea>
         </div>
 
         <div class="form-group">
@@ -24,9 +24,11 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">
-            {{ isEditMode ? 'Update Task' : 'Create Task' }}
-        </button>
-        <a routerLink="/tasks" class="btn btn-secondary">Cancel</a>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="taskForm.invalid">
+                {{ isEditMode ? 'Update Task' : 'Create Task' }}
+            </button>
+            <a routerLink="/tasks" class="btn btn-outline-secondary">Cancel</a>
+        </div>
     </form>
 </div>

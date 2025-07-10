@@ -1,14 +1,16 @@
 <div class="task-list-container">
-    <div class="header">
+    <div class="task-list-header">
         <h2>My Tasks</h2>
-        <button class="btn btn-danger" (click)="logout()">Logout</button>
+        <button class="btn btn-logout" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
     </div>
 
-    <div class="controls">
+    <div class="task-controls">
         <div class="filter-control">
-            <label for="statusFilter">Filter by status:</label>
+            <label for="statusFilter">Filter by status</label>
             <select id="statusFilter" class="form-control" [(ngModel)]="statusFilter" (change)="onStatusChange()">
-                <option value="all">All</option>
+                <option value="all">All Tasks</option>
                 <option value="pending">Pending</option>
                 <option value="in_progress">In Progress</option>
                 <option value="completed">Completed</option>
@@ -16,44 +18,60 @@
         </div>
 
         <div class="search-control">
-            <label for="search">Search:</label>
-            <input type="text" id="search" class="form-control" [(ngModel)]="searchTerm" (input)="onSearch()"
-                placeholder="Search tasks...">
+            <label for="search">Search</label>
+            <div class="search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search" class="form-control" [(ngModel)]="searchTerm" (input)="onSearch()"
+                    placeholder="Search tasks...">
+            </div>
         </div>
 
-        <a routerLink="/tasks/new" class="btn btn-primary">Add New Task</a>
+        <a routerLink="/tasks/new" class="btn btn-primary add-task-btn">
+            <i class="fas fa-plus"></i> Add New Task
+        </a>
     </div>
 
-    <div class="task-table">
-        <table class="table">
+    <div class="table-responsive">
+        <table class="task-table">
             <thead>
                 <tr>
                     <th>Title</th>
                     <th>Description</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th class="status-column">Status</th>
+                    <th class="actions-column">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let task of filteredTasks">
-                    <td>{{ task.title }}</td>
-                    <td>{{ task.description || 'N/A' }}</td>
-                    <td>
+                    <td class="title-column">{{ task.title }}</td>
+                    <td class="description-column">{{ task.description || 'N/A' }}</td>
+                    <td class="status-column">
                         <span class="status-badge" [ngClass]="{
-              'badge-pending': task.status === 'pending',
-              'badge-in-progress': task.status === 'in_progress',
-              'badge-completed': task.status === 'completed'
-            }">
+                            'badge-pending': task.status === 'pending',
+                            'badge-in-progress': task.status === 'in_progress',
+                            'badge-completed': task.status === 'completed'
+                        }">
                             {{ task.status | titlecase }}
                         </span>
                     </td>
-                    <td>
-                        <a [routerLink]="['/tasks/edit', task.id]" class="btn btn-sm btn-info">Edit</a>
-                        <button (click)="deleteTask(task.id!)" class="btn btn-sm btn-danger">Delete</button>
+                    <td class="actions-column">
+                        <div class="action-buttons">
+                            <a [routerLink]="['/tasks/edit', task.id]" class="btn btn-edit">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <button (click)="deleteTask(task.id!)" class="btn btn-delete">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </button>
+                        </div>
                     </td>
                 </tr>
                 <tr *ngIf="filteredTasks.length === 0">
-                    <td colspan="4" class="text-center">No tasks found</td>
+                    <td colspan="4" class="no-tasks">
+                        <div class="no-tasks-content">
+                            <i class="fas fa-tasks"></i>
+                            <p>No tasks found</p>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
