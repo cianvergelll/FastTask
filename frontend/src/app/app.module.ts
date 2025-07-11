@@ -13,6 +13,7 @@ import { AuthService } from './auth/auth.service';
 import { TasksService } from './tasks/tasks.service';
 import { AuthGuard } from './guards/auth.guard';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { TimerComponent } from './timer/timer.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     LoginComponent,
     RegisterComponent,
     TaskListComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,
